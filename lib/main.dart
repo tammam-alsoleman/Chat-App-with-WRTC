@@ -14,6 +14,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final WebRTCService _webrtcService = WebRTCService();
   final RTCVideoRenderer _localRenderer = RTCVideoRenderer();
+  final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
 
   @override
   void initState() {
@@ -23,6 +24,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _initializeRenderer() async {
     await _localRenderer.initialize();
+    await _remoteRenderer.initialize(); // تهيئة الـ RTCVideoRenderer البعيد
     await _webrtcService.initializeWebRTC();
     setState(() {
       _localRenderer.srcObject = _webrtcService.localStream;
@@ -32,6 +34,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _localRenderer.dispose();
+    _remoteRenderer.dispose(); // تخلص من RTCVideoRenderer البعيد
     super.dispose();
   }
 
@@ -41,9 +44,20 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(title: Text("WebRTC P2P Call")),
         body: Center(
-          child: _localRenderer.srcObject != null
-              ? RTCVideoView(_localRenderer)
-              : CircularProgressIndicator(),
+          child: Column(
+            children: [
+              Expanded(
+                child: _localRenderer.srcObject != null
+                    ? RTCVideoView(_localRenderer, mirror: true)
+                    : CircularProgressIndicator(),
+              ),
+              Expanded(
+                child: _webrtcService.remoteRenderer.srcObject != null
+                    ? RTCVideoView(_webrtcService.remoteRenderer)
+                    : CircularProgressIndicator(),
+              ),
+            ],
+          ),
         ),
       ),
     );

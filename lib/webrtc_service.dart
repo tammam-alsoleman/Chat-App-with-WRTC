@@ -3,6 +3,8 @@ import 'package:flutter_webrtc/flutter_webrtc.dart';
 class WebRTCService {
   RTCPeerConnection? _peerConnection;
   MediaStream? _localStream;
+  MediaStream? _remoteStream;
+  final RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
 
   Future<void> initializeWebRTC() async {
     Map<String, dynamic> configuration = {
@@ -12,6 +14,13 @@ class WebRTCService {
     };
 
     _peerConnection = await createPeerConnection(configuration);
+
+    _peerConnection?.onTrack = (RTCTrackEvent event) {
+      if (event.track.kind == 'video') {
+        _remoteStream = event.streams[0];
+        _remoteRenderer.srcObject = _remoteStream;
+      }
+    };
 
     _localStream = await navigator.mediaDevices.getUserMedia({
       'audio': true,
@@ -26,4 +35,5 @@ class WebRTCService {
   }
 
   MediaStream? get localStream => _localStream;
+  RTCVideoRenderer get remoteRenderer => _remoteRenderer;
 }
