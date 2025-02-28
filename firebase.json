@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"wrtc-firebase","appId":"1:130137168577:android:45ed488d8b138c8e809240","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"wrtc-firebase","configurations":{"android":"1:130137168577:android:45ed488d8b138c8e809240","ios":"1:130137168577:ios:3ca76da449416a0a809240"}}}}}}

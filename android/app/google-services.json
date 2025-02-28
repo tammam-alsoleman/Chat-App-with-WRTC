@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "130137168577",
+    "project_id": "wrtc-firebase",
+    "storage_bucket": "wrtc-firebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130137168577:android:45ed488d8b138c8e809240",
+        "android_client_info": {
+          "package_name": "com.example.wrtc_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0g-Q2unrgiskqK-jA68_PHUsyiXGui2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
